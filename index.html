@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        const config = { buttonCount: 5 };
+
+        const main = document.createElement("div");
+        document.body.appendChild(main);
+
+        function creator(type, parent, content) {
+            const el = document.createElement(type);
+            el.innerHTML = content;
+            parent.appendChild(el);
+            return el;
+        }
+
+        for (let i = 1; i <= config.buttonCount; i++) {
+            let btn = creator("button", main, "Counter " + i);
+            btn.className = "btn";
+            btn.total = 0;
+            btn.style.margin = "5px";
+            btn.style.padding = "10px";
+            btn.style.backgroundColor = "lightblue";
+            btn.style.cursor = "pointer";
+
+            btn.onclick = function() {
+                this.total++;
+                this.innerHTML = "Counter " + i + " (Value: " + this.total + ")";
+            };
+        }
+
+        creator("br", main, "");
+        const tallyBtn = creator("button", main, "Get All Totals");
+        tallyBtn.style.marginTop = "20px";
+        
+        const listContainer = creator("ul", main, "");
+
+        tallyBtn.onclick = function() {
+            listContainer.innerHTML = "";
+            const allBtns = document.querySelectorAll(".btn");
+            
+            allBtns.forEach(btn => {
+                let li = creator("li", listContainer, btn.textContent + " - Total: " + btn.total);
+                li.style.color = btn.style.backgroundColor === "lightblue" ? "blue" : "black";
+            });
+        };
+    </script>
+</body>
+</html>
